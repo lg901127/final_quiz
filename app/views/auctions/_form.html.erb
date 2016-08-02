@@ -1,0 +1,43 @@
+<script>
+  $(document).ready(function() {
+     $("#auction_ends_on").datepicker();
+  });
+</script>
+<style>
+.ui-datepicker .ui-widget-content {
+    background-color: white;
+}
+</style>
+<%= form_for(@auction, url: user_auctions_path(current_user)) do |f| %>
+  <% if @auction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@auction.errors.count, "error") %> prohibited this auction from being saved:</h2>
+
+      <ul>
+      <% @auction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :details %><br>
+    <%= f.text_area :details %>
+  </div>
+  <div class="field">
+    <%= f.label :ends_on %><br>
+    <%= f.text_field :ends_on %>
+  </div>
+  <div class="field">
+    <%= f.label :reserve_price %><br>
+    <%= f.number_field :reserve_price %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

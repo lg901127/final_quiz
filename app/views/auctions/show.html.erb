@@ -1,0 +1,59 @@
+<script>
+  $(document).ready(function() {
+    var url = $(location).attr("href");
+    $.ajax({
+      method: "GET",
+      url: url + ".json",
+      success: function(data) {
+        for(var i = 0; i < data.length; i++)
+        $('.bids').append("<li> $" + data[i].bid_price + " date: " + data[i].bid_date + " Buyer: " + data[i].user +"</li>")
+      }
+    })
+    $('button').click(function() {
+      var bidPrice = parseInt($('#bid-price').val());
+      var userId = url.match(/users\/(\d+)/)[1];
+      var auctionId = url.match(/auctions\/(\d+)/)[1];
+      var currentTime = new Date();
+      $.ajax({
+        method: "POST",
+        url: url + "/bids",
+        data: {bid: {bid_price: bidPrice, bid_date: currentTime}},
+        success: function(){
+          $('.bids').children().first().hide();
+          $('.bids').children().first().fadeIn(2000);
+       }
+      })
+    })
+  })
+</script>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @auction.title %>
+</p>
+
+<p>
+  <strong>Details:</strong>
+  <%= @auction.details %>
+</p>
+
+<p>
+  <strong>Ends on:</strong>
+  <%= @auction.ends_on %>
+</p>
+
+<p>
+  <strong>Reserve price:</strong>
+  <%= @auction.reserve_price %>
+</p>
+
+<% if @auction.user == current_user %>
+  <%= link_to "Publish", "#" %> |
+<% end %>
+<%= link_to 'Edit', edit_user_auction_path(current_user, @auction) %> |
+<%= link_to 'Back', root_path %>
+<input type="text" id="bid-price"></input>
+<button id="submit-bid">Bid</button>
+<div class="bids">
+</div>

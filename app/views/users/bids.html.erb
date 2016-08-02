@@ -1,0 +1,6 @@
+<h1><%= "#{@user.full_name}'s Bids" %></h1>
+<ul>
+  <% @bids.each do |bid| %>
+    <li><%= "Auction: #{Auction.find(bid.auction_id).title} $#{bid.bid_price} date: #{bid.bid_date}" %>
+  <% end %>
+</ul>

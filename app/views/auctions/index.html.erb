@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Auctions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Details</th>
+      <th>Ends on</th>
+      <th>Reserve price</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @auctions.each do |auction| %>
+      <tr>
+        <td><%= auction.title %></td>
+        <td><%= auction.details %></td>
+        <td><%= auction.ends_on %></td>
+        <td><%= auction.reserve_price %></td>
+        <td><%= link_to 'Show', user_auction_path(current_user, auction) %></td>
+        <td><%= link_to 'Edit', edit_user_auction_path(current_user, auction) %></td>
+        <td><%= link_to 'Destroy', user_auction_path(current_user, auction), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if user_signed_in? %>
+  <%= link_to 'New Auction', new_user_auction_path(current_user) %>
+<% end %>
